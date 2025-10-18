@@ -5,8 +5,8 @@
  */
 
 // Include configuration files
-require_once '../config/db.php';
-require_once '../config/auth.php';
+require_once 'config/db.php';
+require_once 'config/auth.php';
 
 // Page configuration
 $page_title = "Members Management";
@@ -74,14 +74,14 @@ $success = isset($_GET['success']) ? htmlspecialchars($_GET['success']) : '';
 $error = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : '';
 
 // Include header
-include '../includes/header.php';
+include 'includes/header.php';
 ?>
 
 <!-- Include Sidebar -->
-<?php include '../includes/sidebar.php'; ?>
+<?php include 'includes/sidebar.php'; ?>
 
 <!-- Include Topbar -->
-<?php include '../includes/topbar.php'; ?>
+<?php include 'includes/topbar.php'; ?>
 
 <!-- Main Content Start -->
 <div class="dashboard-body">
@@ -89,7 +89,7 @@ include '../includes/header.php';
     <!-- Breadcrumb -->
     <div class="breadcrumb mb-24">
         <ul class="flex-align gap-4">
-            <li><a href="../dashboard.php" class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
+            <li><a href="index.php" class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
             <li><span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span></li>
             <li><span class="text-main-600 fw-normal text-15">Members</span></li>
         </ul>
@@ -119,7 +119,7 @@ include '../includes/header.php';
                     <p class="text-gray-600 text-15 mt-4">Manage church members and their information</p>
                 </div>
                 <div>
-                    <a href="add.php" class="btn btn-main rounded-pill py-9">
+                    <a href="add-member.php" class="btn btn-main rounded-pill py-9">
                         <i class="ph ph-plus-circle me-8"></i>
                         Add New Member
                     </a>
@@ -150,7 +150,7 @@ include '../includes/header.php';
                     <select class="form-select" id="membership_type" name="membership_type">
                         <option value="">All Types</option>
                         <option value="full_member" <?php echo $membership_type_filter == 'full_member' ? 'selected' : ''; ?>>Full Member</option>
-                        <option value="associate" <?php echo $membership_type_filter == 'associate' ? 'selected' : ''; ?>>Associate</option>
+                        <option value="associate_member" <?php echo $membership_type_filter == 'associate_member' ? 'selected' : ''; ?>>Associate Member</option>
                         <option value="visitor" <?php echo $membership_type_filter == 'visitor' ? 'selected' : ''; ?>>Visitor</option>
                     </select>
                 </div>
@@ -160,7 +160,7 @@ include '../includes/header.php';
                         <option value="">All Departments</option>
                         <?php while ($dept = $departments_result->fetch_assoc()): ?>
                             <option value="<?php echo htmlspecialchars($dept['department']); ?>"
-                                    <?php echo $department_filter == $dept['department'] ? 'selected' : ''; ?>>
+                                    <?php echo $department_filter == $dept['department'] ? 'selected' : ''; ?> >
                                 <?php echo htmlspecialchars($dept['department']); ?>
                             </option>
                         <?php endwhile; ?>
@@ -201,9 +201,9 @@ include '../includes/header.php';
                         <?php if ($result && $result->num_rows > 0): ?>
                             <?php while ($member = $result->fetch_assoc()): ?>
                                 <tr>
-                                    <td>
-                                        <?php if ($member['photo_url']): ?>
-                                            <img src="<?php echo htmlspecialchars($member['photo_url']); ?>"
+                                    <td class="text-dark">
+                                        <?php if ($member['photo']): ?>
+                                            <img src="<?php echo htmlspecialchars($member['photo']); ?>"
                                                  alt="<?php echo htmlspecialchars($member['first_name'] . ' ' . $member['last_name']); ?>"
                                                  class="w-48 h-48 rounded-circle object-fit-cover">
                                         <?php else: ?>
@@ -212,7 +212,7 @@ include '../includes/header.php';
                                             </div>
                                         <?php endif; ?>
                                     </td>
-                                    <td>
+                                    <td class="text-dark">
                                         <h6 class="mb-4">
                                             <?php echo htmlspecialchars($member['first_name'] . ' ' . $member['last_name']); ?>
                                         </h6>
@@ -223,7 +223,7 @@ include '../includes/header.php';
                                             </p>
                                         <?php endif; ?>
                                     </td>
-                                    <td>
+                                    <td class="text-dark">
                                         <?php if ($member['email']): ?>
                                             <p class="text-13 mb-4">
                                                 <i class="ph ph-envelope text-gray-400"></i>
@@ -245,9 +245,9 @@ include '../includes/header.php';
                                                 $type_badge = 'bg-success-50 text-success-600';
                                                 $type_text = 'Full Member';
                                                 break;
-                                            case 'associate':
+                                            case 'associate_member':
                                                 $type_badge = 'bg-info-50 text-info-600';
-                                                $type_text = 'Associate';
+                                                $type_text = 'Associate Member';
                                                 break;
                                             case 'visitor':
                                                 $type_badge = 'bg-warning-50 text-warning-600';
@@ -288,15 +288,15 @@ include '../includes/header.php';
                                     </td>
                                     <td>
                                         <div class="flex-align gap-8">
-                                            <a href="edit.php?id=<?php echo $member['id']; ?>"
+                                            <a href="edit-member.php?id=<?php echo $member['id']; ?>"
                                                class="btn btn-sm btn-outline-main rounded-pill"
                                                title="Edit Member">
                                                 <i class="ph ph-pencil"></i>
                                             </a>
-                                            <a href="delete.php?id=<?php echo $member['id']; ?>"
-                                               class="btn btn-sm btn-outline-danger rounded-pill"
+                                            <a href="delete-member.php?id=<?php echo $member['id']; ?>"
+                                               class="btn btn-sm btn-danger rounded-pill"
                                                title="Delete Member"
-                                               onclick="return confirmDelete('Are you sure you want to delete this member?');">
+                                               onclick="return confirm('Are you sure you want to delete this member?');">
                                                 <i class="ph ph-trash"></i>
                                             </a>
                                         </div>
@@ -308,7 +308,7 @@ include '../includes/header.php';
                                 <td colspan="7" class="text-center py-40">
                                     <i class="ph ph-users-three text-gray-300 text-5xl mb-12"></i>
                                     <p class="text-gray-400 mb-16">No members found</p>
-                                    <a href="add.php" class="btn btn-main btn-sm">
+                                    <a href="add-member.php" class="btn btn-main btn-sm">
                                         <i class="ph ph-plus-circle me-8"></i>Add Your First Member
                                     </a>
                                 </td>
@@ -325,5 +325,5 @@ include '../includes/header.php';
 
 <?php
 // Include footer
-include '../includes/footer.php';
+include 'includes/footer.php';
 ?>

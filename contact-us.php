@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - RCCG Open Heavens Parish</title>
-    <meta name="description" content="Get in touch with RCCG Open Heavens Parish. We'd love to hear from you and answer any questions you may have.">
+    <meta name="description"
+        content="Get in touch with RCCG Open Heavens Parish. We'd love to hear from you and answer any questions you may have.">
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
@@ -16,7 +17,9 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <!-- Font Awesome -->
     <!-- Custom CSS -->
@@ -50,6 +53,29 @@
             transform: translateY(-4px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
+
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #34d399;
+        }
+
+        .alert-error {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #f87171;
+        }
     </style>
 </head>
 
@@ -58,11 +84,8 @@
     <?php include 'includes/nav.php'; ?>
 
     <!-- Page Header -->
-    <section class="relative bg-gradient-to-br from-[#0d47a1] to-[#001845] text-white pt-32 pb-20">
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.5) 1px, transparent 0); background-size: 50px 50px;"></div>
-        </div>
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section class="relative bg-gradient-to-r from-indigo-900 to-indigo-800 text-white pt-32 pb-20">
+        <div class="relative z-10 container mx-auto px-6 text-center">
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Get In Touch</h1>
             <p class="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-6">
                 We'd love to hear from you. Reach out to us anytime.
@@ -70,7 +93,7 @@
             <div class="flex items-center justify-center text-white/80">
                 <a href="index.php" class="hover:text-white transition">Home</a>
                 <i class="fas fa-chevron-right mx-3 text-sm"></i>
-                <span class="text-yellow-400">Contact Us</span>
+                <span class="text-white">Contact Us</span>
             </div>
         </div>
     </section>
@@ -86,7 +109,8 @@
                     </div>
                     <h3 class="text-xl font-bold text-neutral-900 mb-3">Call Us</h3>
                     <p class="text-neutral-600 mb-4">Mon - Fri: 9AM - 5PM</p>
-                    <a href="tel:+2348012345678" class="text-[#0d47a1] font-semibold hover:text-[#0d47a1]/80 transition">
+                    <a href="tel:+2348012345678"
+                        class="text-[#0d47a1] font-semibold hover:text-[#0d47a1]/80 transition">
                         +234 801 234 5678
                     </a>
                 </div>
@@ -98,7 +122,8 @@
                     </div>
                     <h3 class="text-xl font-bold text-neutral-900 mb-3">Email Us</h3>
                     <p class="text-neutral-600 mb-4">We'll respond within 24 hours</p>
-                    <a href="mailto:info@rccgopenheavens.org" class="text-secondary font-semibold hover:text-secondary/80 transition">
+                    <a href="mailto:info@rccgopenheavens.org"
+                        class="text-secondary font-semibold hover:text-secondary/80 transition">
                         info@rccgopenheavens.org
                     </a>
                 </div>
@@ -125,59 +150,63 @@
                 <!-- Form -->
                 <div class="bg-white rounded-2xl shadow-sm p-8 lg:p-12">
                     <h2 class="text-3xl font-bold text-neutral-900 mb-6">Send Us a Message</h2>
-                    <form class="space-y-6">
+
+                    <!-- Alert Messages -->
+                    <div id="alertMessage" class="alert"></div>
+
+                    <form id="contactForm" class="space-y-6">
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-neutral-700 font-semibold mb-2">First Name *</label>
-                                <input type="text" required
-                                       class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:border-[#0d47a1] focus:ring-2 focus:ring-primary/20 transition outline-none"
-                                       placeholder="John">
+                                <input type="text" name="first_name" required
+                                    class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:border-[#0d47a1] focus:ring-2 focus:ring-primary/20 transition outline-none"
+                                    placeholder="John">
                             </div>
                             <div>
                                 <label class="block text-neutral-700 font-semibold mb-2">Last Name *</label>
-                                <input type="text" required
-                                       class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:border-[#0d47a1] focus:ring-2 focus:ring-primary/20 transition outline-none"
-                                       placeholder="Doe">
+                                <input type="text" name="last_name" required
+                                    class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:border-[#0d47a1] focus:ring-2 focus:ring-primary/20 transition outline-none"
+                                    placeholder="Doe">
                             </div>
                         </div>
 
                         <div>
                             <label class="block text-neutral-700 font-semibold mb-2">Email Address *</label>
-                            <input type="email" required
-                                   class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:border-[#0d47a1] focus:ring-2 focus:ring-primary/20 transition outline-none"
-                                   placeholder="john.doe@example.com">
+                            <input type="email" name="email" required
+                                class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:border-[#0d47a1] focus:ring-2 focus:ring-primary/20 transition outline-none"
+                                placeholder="john.doe@example.com">
                         </div>
 
                         <div>
                             <label class="block text-neutral-700 font-semibold mb-2">Phone Number</label>
-                            <input type="tel"
-                                   class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:border-[#0d47a1] focus:ring-2 focus:ring-primary/20 transition outline-none"
-                                   placeholder="+234 800 000 0000">
+                            <input type="tel" name="phone"
+                                class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:border-[#0d47a1] focus:ring-2 focus:ring-primary/20 transition outline-none"
+                                placeholder="+234 800 000 0000">
                         </div>
 
                         <div>
                             <label class="block text-neutral-700 font-semibold mb-2">Subject *</label>
-                            <select required
-                                    class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:border-[#0d47a1] focus:ring-2 focus:ring-primary/20 transition outline-none">
+                            <select name="subject" required
+                                class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:border-[#0d47a1] focus:ring-2 focus:ring-primary/20 transition outline-none">
                                 <option value="">Select a subject</option>
-                                <option value="general">General Inquiry</option>
-                                <option value="prayer">Prayer Request</option>
-                                <option value="visit">Planning a Visit</option>
-                                <option value="partnership">Partnership</option>
-                                <option value="other">Other</option>
+                                <option value="General Inquiry">General Inquiry</option>
+                                <option value="Prayer Request">Prayer Request</option>
+                                <option value="Planning a Visit">Planning a Visit</option>
+                                <option value="Partnership">Partnership</option>
+                                <option value="Other">Other</option>
                             </select>
                         </div>
 
                         <div>
                             <label class="block text-neutral-700 font-semibold mb-2">Message *</label>
-                            <textarea required rows="6"
-                                      class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:border-[#0d47a1] focus:ring-2 focus:ring-primary/20 transition outline-none resize-none"
-                                      placeholder="Tell us how we can help you..."></textarea>
+                            <textarea name="message" required rows="6"
+                                class="w-full px-4 py-3 rounded-lg border border-neutral-300 focus:border-[#0d47a1] focus:ring-2 focus:ring-primary/20 transition outline-none resize-none"
+                                placeholder="Tell us how we can help you..."></textarea>
                         </div>
 
-                        <button type="submit"
-                                class="w-full bg-gradient-to-r from-[#0d47a1] to-[#001845] hover:from-[#001845] hover:to-[#0d47a1] text-white py-4 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
-                            <i class="fas fa-paper-plane mr-2"></i>Send Message
+                        <button type="submit" id="submitBtn"
+                            class="w-full bg-gradient-to-r from-[#0d47a1] to-[#001845] hover:from-[#001845] hover:to-[#0d47a1] text-white py-4 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl">
+                            <i class="fas fa-paper-plane mr-2"></i><span id="btnText">Send Message</span>
                         </button>
                     </form>
                 </div>
@@ -187,7 +216,8 @@
                     <div>
                         <h2 class="text-3xl font-bold text-neutral-900 mb-6">Visit Us This Sunday</h2>
                         <p class="text-lg text-neutral-600 leading-relaxed mb-6">
-                            We'd love to meet you in person! Join us for worship this Sunday and experience the warmth of our community.
+                            We'd love to meet you in person! Join us for worship this Sunday and experience the warmth
+                            of our community.
                         </p>
                     </div>
 
@@ -203,21 +233,21 @@
                                     <p class="font-semibold text-neutral-900">Sunday Service</p>
                                     <p class="text-sm text-neutral-600">Main Worship Service</p>
                                 </div>
-                                <p class="text-[#0d47a1] font-bold">9:00 AM</p>
+                                <p class="text-[#0d47a1] font-bold">8:00 AM</p>
                             </div>
                             <div class="flex justify-between items-center pb-4 border-b border-neutral-100">
                                 <div>
-                                    <p class="font-semibold text-neutral-900">Midweek Service</p>
+                                    <p class="font-semibold text-neutral-900">Tuesday Bible Study</p>
                                     <p class="text-sm text-neutral-600">Bible Study & Prayer</p>
                                 </div>
                                 <p class="text-[#0d47a1] font-bold">6:00 PM</p>
                             </div>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <p class="font-semibold text-neutral-900">Friday Prayer</p>
-                                    <p class="text-sm text-neutral-600">Power Hour</p>
+                                    <p class="font-semibold text-neutral-900">Thursday Faith Clinic</p>
+                                    <p class="text-sm text-neutral-600">Bible Study & Prayer</p>
                                 </div>
-                                <p class="text-[#0d47a1] font-bold">7:00 PM</p>
+                                <p class="text-[#0d47a1] font-bold">6:00 PM</p>
                             </div>
                         </div>
                     </div>
@@ -227,7 +257,8 @@
                         <div class="aspect-video bg-neutral-200 relative">
                             <img src="images/oh/03.jpg" alt="Church Location" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
-                                <a href="#" class="bg-white text-[#0d47a1] px-6 py-3 rounded-lg font-bold hover:bg-neutral-100 transition">
+                                <a href="#"
+                                    class="bg-white text-[#0d47a1] px-6 py-3 rounded-lg font-bold hover:bg-neutral-100 transition">
                                     <i class="fas fa-map-marked-alt mr-2"></i>Get Directions
                                 </a>
                             </div>
@@ -237,18 +268,23 @@
                     <!-- Social Media -->
                     <div class="bg-gradient-to-br from-[#0d47a1] to-[#001845] rounded-2xl p-8 text-white">
                         <h3 class="text-xl font-bold mb-4">Connect With Us</h3>
-                        <p class="text-white/90 mb-6">Follow us on social media to stay updated with our latest news and events</p>
+                        <p class="text-white/90 mb-6">Follow us on social media to stay updated with our latest news and
+                            events</p>
                         <div class="flex gap-4">
-                            <a href="#" class="w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition">
+                            <a href="#"
+                                class="w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition">
                                 <i class="fab fa-facebook-f text-lg"></i>
                             </a>
-                            <a href="#" class="w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition">
+                            <a href="#"
+                                class="w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition">
                                 <i class="fab fa-twitter text-lg"></i>
                             </a>
-                            <a href="#" class="w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition">
+                            <a href="#"
+                                class="w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition">
                                 <i class="fab fa-instagram text-lg"></i>
                             </a>
-                            <a href="#" class="w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition">
+                            <a href="#"
+                                class="w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition">
                                 <i class="fab fa-youtube text-lg"></i>
                             </a>
                         </div>
@@ -261,8 +297,59 @@
     <!-- Footer -->
     <?php include 'includes/footer.php'; ?>
 
-    <!-- AOS Animation JS -->
+    <!-- Contact Form JavaScript -->
     <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const form = this;
+            const formData = new FormData(form);
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const alertMessage = document.getElementById('alertMessage');
+
+            // Disable submit button
+            submitBtn.disabled = true;
+            btnText.textContent = 'Sending...';
+
+            // Send AJAX request
+            fetch('admin/handlers/submit-contact.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Show alert message
+                alertMessage.className = 'alert show ' + (data.success ? 'alert-success' : 'alert-error');
+                alertMessage.innerHTML = '<i class="fas fa-' + (data.success ? 'check-circle' : 'exclamation-circle') + ' mr-2"></i>' + data.message;
+
+                if (data.success) {
+                    // Reset form on success
+                    form.reset();
+
+                    // Scroll to alert
+                    alertMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        alertMessage.classList.remove('show');
+                    }, 5000);
+                }
+
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                btnText.textContent = 'Send Message';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alertMessage.className = 'alert show alert-error';
+                alertMessage.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i>An error occurred. Please try again later.';
+
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                btnText.textContent = 'Send Message';
+            });
+        });
     </script>
 </body>
 

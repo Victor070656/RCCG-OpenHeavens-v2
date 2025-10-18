@@ -85,13 +85,8 @@ if ($result && $result->num_rows > 0) {
     <?php include 'includes/nav.php'; ?>
 
     <!-- Page Header -->
-    <section class="relative bg-gradient-to-br from-[#0d47a1] to-[#001845] text-white pt-32 pb-20">
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute inset-0"
-                style="background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.5) 1px, transparent 0); background-size: 50px 50px;">
-            </div>
-        </div>
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section class="relative bg-gradient-to-r from-indigo-900 to-indigo-800 text-white pt-32 pb-20">
+        <div class="relative z-10 container mx-auto px-6 text-center">
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Give</h1>
             <p class="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-6">
                 Partner with us to spread the Gospel and impact lives
@@ -99,7 +94,7 @@ if ($result && $result->num_rows > 0) {
             <div class="flex items-center justify-center text-white/80">
                 <a href="index.php" class="hover:text-white transition">Home</a>
                 <i class="fas fa-chevron-right mx-3 text-sm"></i>
-                <span class="text-yellow-400">Give</span>
+                <span class="text-white">Give</span>
             </div>
         </div>
     </section>

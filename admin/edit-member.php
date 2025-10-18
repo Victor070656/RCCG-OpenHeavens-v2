@@ -1,21 +1,45 @@
 <?php
 /**
- * Add Member Page
+ * Edit Member Page
  * RCCG Open Heavens Parish Admin Panel
  */
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
 
 // Include configuration files
-require_once '../config/db.php';
-require_once '../config/auth.php';
+require_once 'config/db.php';
+require_once 'config/auth.php';
 
 // Page configuration
-$page_title = "Add New Member";
+$page_title = "Edit Member";
 
 // Authentication check
 define('AUTH_REQUIRED', true);
 
 $error = '';
 $success = '';
+
+// Get member ID
+$member_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+if ($member_id <= 0) {
+    header('Location: members.php?error=' . urlencode('Invalid member ID'));
+    exit();
+}
+
+// Fetch member data
+$stmt = $conn->prepare("SELECT * FROM members WHERE id = ?");
+$stmt->bind_param("i", $member_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    header('Location: members.php?error=' . urlencode('Member not found'));
+    exit();
+}
+
+$member = $result->fetch_assoc();
+$stmt->close();
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -31,7 +55,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $membership_type = sanitize_input($_POST['membership_type'] ?? 'visitor');
     $department = sanitize_input($_POST['department'] ?? '');
     $status = sanitize_input($_POST['status'] ?? 'active');
-    $photo_url = '';
+    $photo = $member['photo']; // Keep existing photo by default
+
+    // Debug: Check membership type value
+    if (!in_array($membership_type, ['full_member', 'associate_member', 'visitor'])) {
+        $error = "Invalid membership type: '$membership_type'. Must be 'full_member', 'associate_member', or 'visitor'.";
+    }
 
     // Validation
     if (empty($first_name)) {
@@ -61,30 +90,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } elseif ($_FILES['photo']['size'] > 5 * 1024 * 1024) { // 5MB max
                 $error = 'File size too large. Maximum 5MB allowed.';
             } else {
+                // Delete old photo if exists
+                if (!empty($member['photo']) && file_exists('../../' . $member['photo'])) {
+                    unlink('../../' . $member['photo']);
+                }
+
                 // Generate unique filename
                 $new_file_name = 'member_' . time() . '_' . uniqid() . '.' . $file_ext;
                 $destination = $upload_dir . $new_file_name;
 
                 if (move_uploaded_file($file_tmp, $destination)) {
-                    $photo_url = '../uploads/members/' . $new_file_name;
+                    $photo = '../uploads/members/' . $new_file_name;
                 } else {
                     $error = 'Failed to upload photo';
                 }
             }
         }
 
-        // If no validation errors, insert into database
+        // If no validation errors, update database
         if (empty($error)) {
-            $stmt = $conn->prepare("INSERT INTO members (first_name, last_name, email, phone, address, date_of_birth, gender, membership_date, membership_type, department, photo_url, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
-            $stmt->bind_param("ssssssssssss", $first_name, $last_name, $email, $phone, $address, $date_of_birth, $gender, $membership_date, $membership_type, $department, $photo_url, $status);
+            $stmt = $conn->prepare("UPDATE members SET first_name = ?, last_name = ?, email = ?, phone = ?, address = ?, date_of_birth = ?, gender = ?, membership_date = ?, membership_type = ?, department = ?, photo = ?, status = ?, updated_at = NOW() WHERE id = ?");
+            $stmt->bind_param("ssssssssssssi", $first_name, $last_name, $email, $phone, $address, $date_of_birth, $gender, $membership_date, $membership_type, $department, $photo, $status, $member_id);
 
             if ($stmt->execute()) {
-                $success = 'Member added successfully!';
+                $success = 'Member updated successfully!';
                 // Redirect to members list
-                header('Location: index.php?success=' . urlencode($success));
+                header('Location: members.php?success=' . urlencode($success));
                 exit();
             } else {
-                $error = 'Failed to add member: ' . $conn->error;
+                $error = 'Failed to update member: ' . $conn->error;
             }
 
             $stmt->close();
@@ -93,14 +127,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Include header
-include '../includes/header.php';
+include 'includes/header.php';
 ?>
 
 <!-- Include Sidebar -->
-<?php include '../includes/sidebar.php'; ?>
+<?php include 'includes/sidebar.php'; ?>
 
 <!-- Include Topbar -->
-<?php include '../includes/topbar.php'; ?>
+<?php include 'includes/topbar.php'; ?>
 
 <!-- Main Content Start -->
 <div class="dashboard-body">
@@ -108,15 +142,15 @@ include '../includes/header.php';
     <!-- Breadcrumb -->
     <div class="breadcrumb mb-24">
         <ul class="flex-align gap-4">
-            <li><a href="../dashboard.php" class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
+            <li><a href="index.php" class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
             <li><span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span></li>
-            <li><a href="index.php" class="text-gray-200 fw-normal text-15 hover-text-main-600">Members</a></li>
+            <li><a href="members.php" class="text-gray-200 fw-normal text-15 hover-text-main-600">Members</a></li>
             <li><span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span></li>
-            <li><span class="text-main-600 fw-normal text-15">Add New Member</span></li>
+            <li><span class="text-main-600 fw-normal text-15">Edit Member</span></li>
         </ul>
     </div>
 
-    <!-- Error Messages -->
+    <!-- Error/Success Messages -->
     <?php if ($error): ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <i class="ph ph-x-circle me-2"></i><?php echo $error; ?>
@@ -129,11 +163,11 @@ include '../includes/header.php';
         <div class="card-body">
             <div class="flex-between flex-wrap gap-8">
                 <div>
-                    <h4 class="mb-0">Add New Member</h4>
-                    <p class="text-gray-600 text-15 mt-4">Add a new church member to the database</p>
+                    <h4 class="mb-0">Edit Member</h4>
+                    <p class="text-gray-600 text-15 mt-4">Update member information</p>
                 </div>
                 <div>
-                    <a href="index.php" class="btn btn-outline-gray rounded-pill py-9">
+                    <a href="members.php" class="btn btn-outline-gray rounded-pill py-9">
                         <i class="ph ph-arrow-left me-8"></i>
                         Back to Members
                     </a>
@@ -155,16 +189,16 @@ include '../includes/header.php';
                         <!-- Name -->
                         <div class="row g-3 mb-20">
                             <div class="col-md-6">
-                                <label for="first_name" class="form-label fw-semibold">First Name <span class="text-danger">*</span></label>
+                                <label for="first_name" class="form-label fw-semibold">First Name <span
+                                        class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="first_name" name="first_name" required
-                                       placeholder="John"
-                                       value="<?php echo isset($_POST['first_name']) ? htmlspecialchars($_POST['first_name']) : ''; ?>">
+                                    value="<?php echo htmlspecialchars($member['first_name']); ?>">
                             </div>
                             <div class="col-md-6">
-                                <label for="last_name" class="form-label fw-semibold">Last Name <span class="text-danger">*</span></label>
+                                <label for="last_name" class="form-label fw-semibold">Last Name <span
+                                        class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="last_name" name="last_name" required
-                                       placeholder="Doe"
-                                       value="<?php echo isset($_POST['last_name']) ? htmlspecialchars($_POST['last_name']) : ''; ?>">
+                                    value="<?php echo htmlspecialchars($member['last_name']); ?>">
                             </div>
                         </div>
 
@@ -173,22 +207,20 @@ include '../includes/header.php';
                             <div class="col-md-6">
                                 <label for="email" class="form-label fw-semibold">Email Address</label>
                                 <input type="email" class="form-control" id="email" name="email"
-                                       placeholder="john.doe@example.com"
-                                       value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
+                                    value="<?php echo htmlspecialchars($member['email']); ?>">
                             </div>
                             <div class="col-md-6">
                                 <label for="phone" class="form-label fw-semibold">Phone Number</label>
                                 <input type="tel" class="form-control" id="phone" name="phone"
-                                       placeholder="+234 800 000 0000"
-                                       value="<?php echo isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : ''; ?>">
+                                    value="<?php echo htmlspecialchars($member['phone']); ?>">
                             </div>
                         </div>
 
                         <!-- Address -->
                         <div class="mb-20">
                             <label for="address" class="form-label fw-semibold">Address</label>
-                            <textarea class="form-control" id="address" name="address" rows="3"
-                                      placeholder="Enter full address"><?php echo isset($_POST['address']) ? htmlspecialchars($_POST['address']) : ''; ?></textarea>
+                            <textarea class="form-control" id="address" name="address"
+                                rows="3"><?php echo htmlspecialchars($member['address']); ?></textarea>
                         </div>
 
                         <!-- Personal Details -->
@@ -196,14 +228,16 @@ include '../includes/header.php';
                             <div class="col-md-6">
                                 <label for="date_of_birth" class="form-label fw-semibold">Date of Birth</label>
                                 <input type="date" class="form-control" id="date_of_birth" name="date_of_birth"
-                                       value="<?php echo isset($_POST['date_of_birth']) ? $_POST['date_of_birth'] : ''; ?>">
+                                    value="<?php echo $member['date_of_birth'] ? date('Y-m-d', strtotime($member['date_of_birth'])) : ''; ?>">
                             </div>
                             <div class="col-md-6">
                                 <label for="gender" class="form-label fw-semibold">Gender</label>
                                 <select class="form-select" id="gender" name="gender">
                                     <option value="">Select Gender</option>
-                                    <option value="male" <?php echo (isset($_POST['gender']) && $_POST['gender'] == 'male') ? 'selected' : ''; ?>>Male</option>
-                                    <option value="female" <?php echo (isset($_POST['gender']) && $_POST['gender'] == 'female') ? 'selected' : ''; ?>>Female</option>
+                                    <option value="male" <?php echo $member['gender'] == 'male' ? 'selected' : ''; ?>>Male
+                                    </option>
+                                    <option value="female" <?php echo $member['gender'] == 'female' ? 'selected' : ''; ?>>
+                                        Female</option>
                                 </select>
                             </div>
                         </div>
@@ -220,21 +254,21 @@ include '../includes/header.php';
                             <div class="col-md-6">
                                 <label for="membership_type" class="form-label fw-semibold">Membership Type</label>
                                 <select class="form-select" id="membership_type" name="membership_type">
-                                    <option value="visitor" <?php echo (isset($_POST['membership_type']) && $_POST['membership_type'] == 'visitor') ? 'selected' : 'selected'; ?>>Visitor</option>
-                                    <option value="associate" <?php echo (isset($_POST['membership_type']) && $_POST['membership_type'] == 'associate') ? 'selected' : ''; ?>>Associate Member</option>
-                                    <option value="full_member" <?php echo (isset($_POST['membership_type']) && $_POST['membership_type'] == 'full_member') ? 'selected' : ''; ?>>Full Member</option>
+                                    <option value="visitor" <?php echo $member['membership_type'] == 'visitor' ? 'selected' : ''; ?>>Visitor</option>
+                                    <option value="associate_member" <?php echo $member['membership_type'] == 'associate_member' ? 'selected' : ''; ?>>Associate Member</option>
+                                    <option value="full_member" <?php echo $member['membership_type'] == 'full_member' ? 'selected' : ''; ?>>Full Member</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
                                 <label for="membership_date" class="form-label fw-semibold">Membership Date</label>
                                 <input type="date" class="form-control" id="membership_date" name="membership_date"
-                                       value="<?php echo isset($_POST['membership_date']) ? $_POST['membership_date'] : date('Y-m-d'); ?>">
+                                    value="<?php echo $member['membership_date'] ? date('Y-m-d', strtotime($member['membership_date'])) : ''; ?>">
                             </div>
                             <div class="col-md-12">
                                 <label for="department" class="form-label fw-semibold">Department/Unit</label>
                                 <input type="text" class="form-control" id="department" name="department"
-                                       placeholder="e.g., Choir, Ushering, Youth, Children"
-                                       value="<?php echo isset($_POST['department']) ? htmlspecialchars($_POST['department']) : ''; ?>">
+                                    placeholder="e.g., Choir, Ushering, Youth, Children"
+                                    value="<?php echo htmlspecialchars($member['department']); ?>">
                             </div>
                         </div>
                     </div>
@@ -252,8 +286,10 @@ include '../includes/header.php';
                         <div class="mb-0">
                             <label for="status" class="form-label fw-semibold">Member Status</label>
                             <select class="form-select" id="status" name="status">
-                                <option value="active" <?php echo (isset($_POST['status']) && $_POST['status'] == 'active') ? 'selected' : 'selected'; ?>>Active</option>
-                                <option value="inactive" <?php echo (isset($_POST['status']) && $_POST['status'] == 'inactive') ? 'selected' : ''; ?>>Inactive</option>
+                                <option value="active" <?php echo $member['status'] == 'active' ? 'selected' : ''; ?>>
+                                    Active</option>
+                                <option value="inactive" <?php echo $member['status'] == 'inactive' ? 'selected' : ''; ?>>
+                                    Inactive</option>
                             </select>
                         </div>
                     </div>
@@ -265,13 +301,27 @@ include '../includes/header.php';
                         <h5 class="mb-0">Member Photo</h5>
                     </div>
                     <div class="card-body">
+                        <?php if (!empty($member['photo'])): ?>
+                            <div class="mb-16 text-center">
+                                <img src="<?php echo htmlspecialchars($member['photo']); ?>" alt="Current Photo"
+                                    class="img-fluid rounded-circle mb-8" style="max-height: 200px; max-width: 200px;">
+                                <p class="text-13 text-gray-600">Current Photo</p>
+                            </div>
+                        <?php endif; ?>
+
                         <div class="mb-20">
-                            <label for="photo" class="form-label fw-semibold">Upload Photo</label>
+                            <label for="photo" class="form-label fw-semibold">
+                                <?php echo !empty($member['photo']) ? 'Replace Photo' : 'Upload Photo'; ?>
+                            </label>
                             <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
-                            <small class="text-gray-500 mt-8 d-block">Max size: 5MB. Formats: JPG, PNG, GIF, WEBP</small>
+                            <small class="text-gray-500 mt-8 d-block">Max size: 5MB. Formats: JPG, PNG, GIF,
+                                WEBP</small>
                         </div>
+
                         <div id="image-preview" class="text-center" style="display: none;">
-                            <img src="" alt="Preview" class="img-fluid rounded-circle mb-8" style="max-height: 200px; max-width: 200px;">
+                            <img src="" alt="Preview" class="img-fluid rounded-circle mb-8"
+                                style="max-height: 200px; max-width: 200px;">
+                            <p class="text-13 text-gray-600">New Photo Preview</p>
                         </div>
                     </div>
                 </div>
@@ -281,9 +331,9 @@ include '../includes/header.php';
                     <div class="card-body">
                         <button type="submit" class="btn btn-main w-100 mb-12">
                             <i class="ph ph-check-circle me-8"></i>
-                            Add Member
+                            Update Member
                         </button>
-                        <a href="index.php" class="btn btn-outline-gray w-100">
+                        <a href="members.php" class="btn btn-outline-gray w-100">
                             <i class="ph ph-x me-8"></i>
                             Cancel
                         </a>
@@ -316,5 +366,5 @@ $custom_js = "
 ";
 
 // Include footer
-include '../includes/footer.php';
+include 'includes/footer.php';
 ?>

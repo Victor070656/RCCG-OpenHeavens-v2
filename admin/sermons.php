@@ -111,7 +111,7 @@ include 'includes/header.php';
                     <p class="text-gray-600 text-15 mt-4">Manage church sermons, messages, and teachings</p>
                 </div>
                 <div>
-                    <a href="add.php" class="btn btn-main rounded-pill py-9">
+                    <a href="add-sermon.php" class="btn btn-main rounded-pill py-9">
                         <i class="ph ph-plus-circle me-8"></i>
                         Add New Sermon
                     </a>

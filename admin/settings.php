@@ -5,8 +5,8 @@
  */
 
 // Include configuration files
-require_once '../config/db.php';
-require_once '../config/auth.php';
+require_once 'config/db.php';
+require_once 'config/auth.php';
 
 // Page configuration
 $page_title = "Church Settings";
@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt->execute()) {
                 $success = 'Settings updated successfully!';
                 // Refresh settings
-                header('Location: index.php?success=' . urlencode($success));
+                header('Location: settings.php?success=' . urlencode($success));
                 exit();
             } else {
                 $error = 'Failed to update settings: ' . $conn->error;
@@ -145,14 +145,14 @@ if (isset($_GET['success'])) {
 }
 
 // Include header
-include '../includes/header.php';
+include 'includes/header.php';
 ?>
 
 <!-- Include Sidebar -->
-<?php include '../includes/sidebar.php'; ?>
+<?php include 'includes/sidebar.php'; ?>
 
 <!-- Include Topbar -->
-<?php include '../includes/topbar.php'; ?>
+<?php include 'includes/topbar.php'; ?>
 
 <!-- Main Content Start -->
 <div class="dashboard-body">
@@ -160,7 +160,7 @@ include '../includes/header.php';
     <!-- Breadcrumb -->
     <div class="breadcrumb mb-24">
         <ul class="flex-align gap-4">
-            <li><a href="../dashboard.php" class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
+            <li><a href="index.php" class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
             <li><span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span></li>
             <li><span class="text-main-600 fw-normal text-15">Church Settings</span></li>
         </ul>
@@ -373,5 +373,5 @@ include '../includes/header.php';
 
 <?php
 // Include footer
-include '../includes/footer.php';
+include 'includes/footer.php';
 ?>

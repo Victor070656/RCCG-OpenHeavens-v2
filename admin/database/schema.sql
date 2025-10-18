@@ -115,10 +115,21 @@ CREATE TABLE IF NOT EXISTS `contact_messages` (
 -- Church settings table (for storing church account numbers and other info)
 CREATE TABLE IF NOT EXISTS `church_settings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `setting_key` varchar(100) NOT NULL UNIQUE,
-  `setting_value` text,
-  `setting_label` varchar(200) DEFAULT NULL,
+  `church_name` varchar(200) DEFAULT 'RCCG Open Heavens Parish',
+  `church_address` text,
+  `church_phone` varchar(20) DEFAULT NULL,
+  `church_email` varchar(100) DEFAULT NULL,
+  `bank_name` varchar(100) DEFAULT NULL,
+  `account_name` varchar(200) DEFAULT NULL,
+  `account_number` varchar(50) DEFAULT NULL,
+  `facebook_url` varchar(255) DEFAULT NULL,
+  `twitter_url` varchar(255) DEFAULT NULL,
+  `instagram_url` varchar(255) DEFAULT NULL,
+  `youtube_url` varchar(255) DEFAULT NULL,
+  `logo_url` varchar(255) DEFAULT NULL,
+  `favicon_url` varchar(255) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `updated_by` (`updated_by`),
@@ -129,14 +140,9 @@ CREATE TABLE IF NOT EXISTS `church_settings` (
 INSERT INTO `admin_users` (`username`, `email`, `password`, `full_name`, `role`, `status`) VALUES
 ('admin', 'admin@openheavens.org', 'Admin@123', 'System Administrator', 'super_admin', 'active');
 
--- Insert church settings including account numbers
-INSERT INTO `church_settings` (`setting_key`, `setting_value`, `setting_label`, `updated_by`) VALUES
-('bank_name', 'First Bank of Nigeria', 'Bank Name', 1),
-('account_name', 'RCCG Open Heavens Parish', 'Account Name', 1),
-('account_number', '1234567890', 'Account Number', 1),
-('church_phone', '+234 XXX XXX XXXX', 'Church Phone', 1),
-('church_email', 'info@openheavens.org', 'Church Email', 1),
-('church_address', 'Lagos, Nigeria', 'Church Address', 1);
+-- Insert default church settings
+INSERT INTO `church_settings` (`church_name`, `church_address`, `church_phone`, `church_email`, `bank_name`, `account_name`, `account_number`) VALUES
+('RCCG Open Heavens Parish', 'Port Harcourt, Rivers State, Nigeria', '+234 XXX XXX XXXX', 'info@openheavens.org', 'First Bank of Nigeria', 'RCCG Open Heavens Parish', '1234567890');
 
 -- Insert sample events
 INSERT INTO `events` (`title`, `description`, `start_date`, `end_date`, `location`, `entry_type`, `status`, `created_by`) VALUES

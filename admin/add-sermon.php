@@ -3,6 +3,8 @@
  * Add Sermon Page
  * RCCG Open Heavens Parish Admin Panel
  */
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
 
 // Include configuration files
 require_once 'config/db.php';
@@ -74,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // If no validation errors, insert into database
         if (empty($error)) {
-            $stmt = $conn->prepare("INSERT INTO sermons (title, description, pastor, sermon_date, category, scripture_reference, video_url, audio_url, thumbnail_url, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
+            $stmt = $conn->prepare("INSERT INTO sermons (title, description, pastor, sermon_date, category, scripture_reference, video_url, audio_url, thumbnail, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
             $stmt->bind_param("ssssssssss", $title, $description, $pastor, $sermon_date, $category, $scripture_reference, $video_url, $audio_url, $thumbnail_url, $status);
 
             if ($stmt->execute()) {
@@ -153,10 +155,11 @@ include 'includes/header.php';
                     <div class="card-body">
                         <!-- Sermon Title -->
                         <div class="mb-20">
-                            <label for="title" class="form-label fw-semibold">Sermon Title <span class="text-danger">*</span></label>
+                            <label for="title" class="form-label fw-semibold">Sermon Title <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="title" name="title" required
-                                   placeholder="e.g., Walking in Faith, The Power of Prayer"
-                                   value="<?php echo isset($_POST['title']) ? htmlspecialchars($_POST['title']) : ''; ?>">
+                                placeholder="e.g., Walking in Faith, The Power of Prayer"
+                                value="<?php echo isset($_POST['title']) ? htmlspecialchars($_POST['title']) : ''; ?>">
                         </div>
 
                         <!-- Sermon Description -->
@@ -171,15 +174,17 @@ include 'includes/header.php';
                         <!-- Pastor Name -->
                         <div class="row g-3 mb-20">
                             <div class="col-md-6">
-                                <label for="pastor" class="form-label fw-semibold">Pastor/Speaker <span class="text-danger">*</span></label>
+                                <label for="pastor" class="form-label fw-semibold">Pastor/Speaker <span
+                                        class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="pastor" name="pastor" required
-                                       placeholder="e.g., Pastor John Doe"
-                                       value="<?php echo isset($_POST['pastor']) ? htmlspecialchars($_POST['pastor']) : ''; ?>">
+                                    placeholder="e.g., Pastor John Doe"
+                                    value="<?php echo isset($_POST['pastor']) ? htmlspecialchars($_POST['pastor']) : ''; ?>">
                             </div>
                             <div class="col-md-6">
-                                <label for="sermon_date" class="form-label fw-semibold">Sermon Date <span class="text-danger">*</span></label>
+                                <label for="sermon_date" class="form-label fw-semibold">Sermon Date <span
+                                        class="text-danger">*</span></label>
                                 <input type="date" class="form-control" id="sermon_date" name="sermon_date" required
-                                       value="<?php echo isset($_POST['sermon_date']) ? $_POST['sermon_date'] : date('Y-m-d'); ?>">
+                                    value="<?php echo isset($_POST['sermon_date']) ? $_POST['sermon_date'] : date('Y-m-d'); ?>">
                             </div>
                         </div>
 
@@ -188,14 +193,15 @@ include 'includes/header.php';
                             <div class="col-md-6">
                                 <label for="category" class="form-label fw-semibold">Category</label>
                                 <input type="text" class="form-control" id="category" name="category"
-                                       placeholder="e.g., Sunday Service, Midweek, Special"
-                                       value="<?php echo isset($_POST['category']) ? htmlspecialchars($_POST['category']) : ''; ?>">
+                                    placeholder="e.g., Sunday Service, Midweek, Special"
+                                    value="<?php echo isset($_POST['category']) ? htmlspecialchars($_POST['category']) : ''; ?>">
                             </div>
                             <div class="col-md-6">
-                                <label for="scripture_reference" class="form-label fw-semibold">Scripture Reference</label>
-                                <input type="text" class="form-control" id="scripture_reference" name="scripture_reference"
-                                       placeholder="e.g., John 3:16, Romans 8:28"
-                                       value="<?php echo isset($_POST['scripture_reference']) ? htmlspecialchars($_POST['scripture_reference']) : ''; ?>">
+                                <label for="scripture_reference" class="form-label fw-semibold">Scripture
+                                    Reference</label>
+                                <input type="text" class="form-control" id="scripture_reference"
+                                    name="scripture_reference" placeholder="e.g., John 3:16, Romans 8:28"
+                                    value="<?php echo isset($_POST['scripture_reference']) ? htmlspecialchars($_POST['scripture_reference']) : ''; ?>">
                             </div>
                         </div>
                     </div>
@@ -213,8 +219,8 @@ include 'includes/header.php';
                                 Video URL
                             </label>
                             <input type="url" class="form-control" id="video_url" name="video_url"
-                                   placeholder="https://youtube.com/watch?v=..."
-                                   value="<?php echo isset($_POST['video_url']) ? htmlspecialchars($_POST['video_url']) : ''; ?>">
+                                placeholder="https://youtube.com/watch?v=..."
+                                value="<?php echo isset($_POST['video_url']) ? htmlspecialchars($_POST['video_url']) : ''; ?>">
                             <small class="text-gray-500 mt-4 d-block">YouTube, Vimeo, or direct video link</small>
                         </div>
 
@@ -224,8 +230,8 @@ include 'includes/header.php';
                                 Audio URL
                             </label>
                             <input type="url" class="form-control" id="audio_url" name="audio_url"
-                                   placeholder="https://example.com/audio.mp3"
-                                   value="<?php echo isset($_POST['audio_url']) ? htmlspecialchars($_POST['audio_url']) : ''; ?>">
+                                placeholder="https://example.com/audio.mp3"
+                                value="<?php echo isset($_POST['audio_url']) ? htmlspecialchars($_POST['audio_url']) : ''; ?>">
                             <small class="text-gray-500 mt-4 d-block">Direct link to audio file (MP3, M4A, etc.)</small>
                         </div>
                     </div>
@@ -247,7 +253,8 @@ include 'includes/header.php';
                                 <option value="published" <?php echo (isset($_POST['status']) && $_POST['status'] == 'published') ? 'selected' : ''; ?>>Published</option>
                                 <option value="archived" <?php echo (isset($_POST['status']) && $_POST['status'] == 'archived') ? 'selected' : ''; ?>>Archived</option>
                             </select>
-                            <small class="text-gray-500 mt-4 d-block">Only published sermons appear on the website</small>
+                            <small class="text-gray-500 mt-4 d-block">Only published sermons appear on the
+                                website</small>
                         </div>
                     </div>
                 </div>
@@ -261,7 +268,8 @@ include 'includes/header.php';
                         <div class="mb-20">
                             <label for="thumbnail" class="form-label fw-semibold">Upload Thumbnail</label>
                             <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="image/*">
-                            <small class="text-gray-500 mt-8 d-block">Max size: 5MB. Formats: JPG, PNG, GIF, WEBP</small>
+                            <small class="text-gray-500 mt-8 d-block">Max size: 5MB. Formats: JPG, PNG, GIF,
+                                WEBP</small>
                         </div>
                         <div id="image-preview" class="text-center" style="display: none;">
                             <img src="" alt="Preview" class="img-fluid rounded-8 mb-8" style="max-height: 200px;">

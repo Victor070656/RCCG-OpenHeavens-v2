@@ -27,8 +27,8 @@ $base_url = "http://localhost/oh/";
             <ul class="sidebar-menu">
 
                 <!-- Dashboard -->
-                <li class="sidebar-menu__item <?php echo ($current_page == 'index.php') ? 'active' : ''; ?>">
-                    <a href="dashboard.php" class="sidebar-menu__link">
+                <li class="sidebar-menu__item <?php echo ($current_page == 'index.php') ? 'activePage' : ''; ?>">
+                    <a href="index.php" class="sidebar-menu__link">
                         <span class="icon"><i class="ph ph-house"></i></span>
                         <span class="text">Dashboard</span>
                     </a>
@@ -53,8 +53,8 @@ $base_url = "http://localhost/oh/";
 
                 <!-- Members Management -->
                 <li
-                    class="sidebar-menu__item <?php echo (strpos($current_page, 'members') !== false) ? 'activePage' : ''; ?>">
-                    <a href="members/index.php" class="sidebar-menu__link">
+                    class="sidebar-menu__item <?php echo (strpos($current_page, 'member') !== false) ? 'activePage' : ''; ?>">
+                    <a href="members.php" class="sidebar-menu__link">
                         <span class="icon"><i class="ph ph-users-three"></i></span>
                         <span class="text">Members</span>
                     </a>
@@ -62,21 +62,21 @@ $base_url = "http://localhost/oh/";
 
                 <!-- Contact Messages -->
                 <li
-                    class="sidebar-menu__item <?php echo (strpos($current_page, 'messages') !== false) ? 'activePage' : ''; ?>">
-                    <a href="messages/index.php" class="sidebar-menu__link">
+                    class="sidebar-menu__item <?php echo (strpos($current_page, 'message') !== false || strpos($current_page, 'contact') !== false) ? 'activePage' : ''; ?>">
+                    <a href="messages.php" class="sidebar-menu__link">
                         <span class="icon"><i class="ph ph-envelope"></i></span>
                         <span class="text">Contact Messages</span>
                     </a>
                 </li>
 
                 <!-- Newsletter Subscribers -->
-                <li
+                <!-- <li
                     class="sidebar-menu__item <?php echo (strpos($current_page, 'newsletter') !== false) ? 'activePage' : ''; ?>">
-                    <a href="newsletter/index.php" class="sidebar-menu__link">
+                    <a href="newsletter.php" class="sidebar-menu__link">
                         <span class="icon"><i class="ph ph-newspaper"></i></span>
                         <span class="text">Newsletter</span>
                     </a>
-                </li>
+                </li> -->
 
                 <!-- Divider -->
                 <li class="sidebar-menu__item">
@@ -85,13 +85,12 @@ $base_url = "http://localhost/oh/";
                 </li>
 
                 <!-- Church Settings -->
-                <li
-                    class="sidebar-menu__item <?php echo (strpos($current_page, 'settings') !== false) ? 'activePage' : ''; ?>">
-                    <a href="settings/index.php" class="sidebar-menu__link">
+                <!-- <li class="sidebar-menu__item <?php echo ($current_page == 'settings.php') ? 'activePage' : ''; ?>">
+                    <a href="settings.php" class="sidebar-menu__link">
                         <span class="icon"><i class="ph ph-gear"></i></span>
                         <span class="text">Church Settings</span>
                     </a>
-                </li>
+                </li> -->
 
 
 
