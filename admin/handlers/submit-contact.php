@@ -2,6 +2,10 @@
 // Handle contact form submissions
 header('Content-Type: application/json');
 
+// Enable error reporting for debugging
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
+
 // Include database connection
 require_once '../config/db.php';
 
@@ -64,6 +68,9 @@ try {
 } catch (Exception $e) {
     $response['success'] = false;
     $response['message'] = $e->getMessage();
+} catch (Error $e) {
+    $response['success'] = false;
+    $response['message'] = 'Server error: ' . $e->getMessage();
 }
 
 // Send response

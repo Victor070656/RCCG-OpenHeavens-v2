@@ -26,6 +26,9 @@ $current_admin = get_current_admin();
     <!-- Favicon -->
     <link rel="shortcut icon" href="../images/favicon.png">
 
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 
