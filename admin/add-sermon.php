@@ -165,10 +165,9 @@ include 'includes/header.php';
                         <!-- Sermon Description -->
                         <div class="mb-20">
                             <label for="description" class="form-label fw-semibold">Sermon Description</label>
-                            <div id="editor" style="height: 250px;">
+                            <textarea name="description" class="form-control" style="height: 250px;">
                                 <?php echo isset($_POST['description']) ? $_POST['description'] : ''; ?>
-                            </div>
-                            <input type="hidden" name="description" id="description">
+                            </textarea>
                         </div>
 
                         <!-- Pastor Name -->

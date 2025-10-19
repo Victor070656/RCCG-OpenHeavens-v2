@@ -180,33 +180,36 @@ include 'includes/header.php';
                     <div class="card-body">
                         <!-- Sermon Title -->
                         <div class="mb-20">
-                            <label for="title" class="form-label fw-semibold">Sermon Title <span class="text-danger">*</span></label>
+                            <label for="title" class="form-label fw-semibold">Sermon Title <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="title" name="title" required
-                                   placeholder="e.g., Walking in Faith, The Power of Prayer"
-                                   value="<?php echo htmlspecialchars($sermon['title']); ?>">
+                                placeholder="e.g., Walking in Faith, The Power of Prayer"
+                                value="<?php echo htmlspecialchars($sermon['title']); ?>">
                         </div>
 
                         <!-- Sermon Description -->
                         <div class="mb-20">
                             <label for="description" class="form-label fw-semibold">Sermon Description</label>
-                            <div id="editor" style="height: 250px;">
+
+                            <textarea name="description" class="form-control" style="height: 250px;">
                                 <?php echo $sermon['description']; ?>
-                            </div>
-                            <input type="hidden" name="description" id="description">
+                            </textarea>
                         </div>
 
                         <!-- Pastor Name -->
                         <div class="row g-3 mb-20">
                             <div class="col-md-6">
-                                <label for="pastor" class="form-label fw-semibold">Pastor/Speaker <span class="text-danger">*</span></label>
+                                <label for="pastor" class="form-label fw-semibold">Pastor/Speaker <span
+                                        class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="pastor" name="pastor" required
-                                       placeholder="e.g., Pastor John Doe"
-                                       value="<?php echo htmlspecialchars($sermon['pastor']); ?>">
+                                    placeholder="e.g., Pastor John Doe"
+                                    value="<?php echo htmlspecialchars($sermon['pastor']); ?>">
                             </div>
                             <div class="col-md-6">
-                                <label for="sermon_date" class="form-label fw-semibold">Sermon Date <span class="text-danger">*</span></label>
+                                <label for="sermon_date" class="form-label fw-semibold">Sermon Date <span
+                                        class="text-danger">*</span></label>
                                 <input type="date" class="form-control" id="sermon_date" name="sermon_date" required
-                                       value="<?php echo date('Y-m-d', strtotime($sermon['sermon_date'])); ?>">
+                                    value="<?php echo date('Y-m-d', strtotime($sermon['sermon_date'])); ?>">
                             </div>
                         </div>
 
@@ -215,14 +218,15 @@ include 'includes/header.php';
                             <div class="col-md-6">
                                 <label for="category" class="form-label fw-semibold">Category</label>
                                 <input type="text" class="form-control" id="category" name="category"
-                                       placeholder="e.g., Sunday Service, Midweek, Special"
-                                       value="<?php echo htmlspecialchars($sermon['category']); ?>">
+                                    placeholder="e.g., Sunday Service, Midweek, Special"
+                                    value="<?php echo htmlspecialchars($sermon['category']); ?>">
                             </div>
                             <div class="col-md-6">
-                                <label for="scripture_reference" class="form-label fw-semibold">Scripture Reference</label>
-                                <input type="text" class="form-control" id="scripture_reference" name="scripture_reference"
-                                       placeholder="e.g., John 3:16, Romans 8:28"
-                                       value="<?php echo htmlspecialchars($sermon['scripture_reference']); ?>">
+                                <label for="scripture_reference" class="form-label fw-semibold">Scripture
+                                    Reference</label>
+                                <input type="text" class="form-control" id="scripture_reference"
+                                    name="scripture_reference" placeholder="e.g., John 3:16, Romans 8:28"
+                                    value="<?php echo htmlspecialchars($sermon['scripture_reference']); ?>">
                             </div>
                         </div>
                     </div>
@@ -240,8 +244,8 @@ include 'includes/header.php';
                                 Video URL
                             </label>
                             <input type="url" class="form-control" id="video_url" name="video_url"
-                                   placeholder="https://youtube.com/watch?v=..."
-                                   value="<?php echo htmlspecialchars($sermon['video_url']); ?>">
+                                placeholder="https://youtube.com/watch?v=..."
+                                value="<?php echo htmlspecialchars($sermon['video_url']); ?>">
                             <small class="text-gray-500 mt-4 d-block">YouTube, Vimeo, or direct video link</small>
                         </div>
 
@@ -251,8 +255,8 @@ include 'includes/header.php';
                                 Audio URL
                             </label>
                             <input type="url" class="form-control" id="audio_url" name="audio_url"
-                                   placeholder="https://example.com/audio.mp3"
-                                   value="<?php echo htmlspecialchars($sermon['audio_url']); ?>">
+                                placeholder="https://example.com/audio.mp3"
+                                value="<?php echo htmlspecialchars($sermon['audio_url']); ?>">
                             <small class="text-gray-500 mt-4 d-block">Direct link to audio file (MP3, M4A, etc.)</small>
                         </div>
                     </div>
@@ -270,11 +274,14 @@ include 'includes/header.php';
                         <div class="mb-0">
                             <label for="status" class="form-label fw-semibold">Status</label>
                             <select class="form-select" id="status" name="status">
-                                <option value="draft" <?php echo $sermon['status'] == 'draft' ? 'selected' : ''; ?>>Draft</option>
+                                <option value="draft" <?php echo $sermon['status'] == 'draft' ? 'selected' : ''; ?>>Draft
+                                </option>
                                 <option value="published" <?php echo $sermon['status'] == 'published' ? 'selected' : ''; ?>>Published</option>
-                                <option value="archived" <?php echo $sermon['status'] == 'archived' ? 'selected' : ''; ?>>Archived</option>
+                                <option value="archived" <?php echo $sermon['status'] == 'archived' ? 'selected' : ''; ?>>
+                                    Archived</option>
                             </select>
-                            <small class="text-gray-500 mt-4 d-block">Only published sermons appear on the website</small>
+                            <small class="text-gray-500 mt-4 d-block">Only published sermons appear on the
+                                website</small>
                         </div>
                     </div>
                 </div>
@@ -288,7 +295,7 @@ include 'includes/header.php';
                         <?php if (!empty($sermon['thumbnail'])): ?>
                             <div class="mb-16 text-center">
                                 <img src="<?php echo htmlspecialchars($sermon['thumbnail']); ?>" alt="Current Thumbnail"
-                                     class="img-fluid rounded-8 mb-8" style="max-height: 200px;">
+                                    class="img-fluid rounded-8 mb-8" style="max-height: 200px;">
                                 <p class="text-13 text-gray-600">Current Thumbnail</p>
                             </div>
                         <?php endif; ?>
@@ -298,7 +305,8 @@ include 'includes/header.php';
                                 <?php echo !empty($sermon['thumbnail']) ? 'Replace Thumbnail' : 'Upload Thumbnail'; ?>
                             </label>
                             <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="image/*">
-                            <small class="text-gray-500 mt-8 d-block">Max size: 5MB. Formats: JPG, PNG, GIF, WEBP</small>
+                            <small class="text-gray-500 mt-8 d-block">Max size: 5MB. Formats: JPG, PNG, GIF,
+                                WEBP</small>
                         </div>
 
                         <div id="image-preview" class="text-center" style="display: none;">
