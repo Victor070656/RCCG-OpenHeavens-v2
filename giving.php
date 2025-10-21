@@ -3,6 +3,10 @@
 require_once 'admin/config/db.php';
 
 // Fetch bank account details from church_settings
+$accounts = [
+    ["purpose" => "Tithe, Offering & Thanksgiving", "name" => "RCCG OPEN HEAVENS PARISH", "bank" => "Access Bank", "num" => "0054876022"],
+    ["purpose" => "Church Planting", "name" => "RCCG OPEN HEAVENS CHURCH PLANTING", "bank" => "Access Bank", "num" => "1507797152"],
+];
 $bank_name = 'Access Bank';
 $account_name = 'RCCG Open Heavens';
 $account_number = '0123456789';
@@ -171,7 +175,7 @@ if ($result && $result->num_rows > 0) {
 
             <div class="grid lg:grid-cols-2 gap-8 mb-12">
                 <!-- Online Giving -->
-                <div
+                <!-- <div
                     class="bg-gradient-to-br from-[#0d47a1] to-[#001845] rounded-2xl p-8 md:p-12 text-white card-hover">
                     <div class="flex items-center mb-6">
                         <div class="bg-white/20 w-16 h-16 rounded-2xl flex items-center justify-center mr-4">
@@ -190,41 +194,44 @@ if ($result && $result->num_rows > 0) {
                         class="bg-white text-[#0d47a1] hover:bg-neutral-100 px-8 py-4 rounded-xl font-bold text-lg transition w-full">
                         <i class="fas fa-hand-holding-heart mr-2"></i>Give Online Now
                     </button>
-                </div>
+                </div> -->
 
-                <!-- Bank Transfer -->
-                <div
-                    class="bg-gradient-to-br from-secondary to-green-700 rounded-2xl p-8 md:p-12 text-white card-hover">
-                    <div class="flex items-center mb-6">
-                        <div class="bg-white/20 w-16 h-16 rounded-2xl flex items-center justify-center mr-4">
-                            <i class="fas fa-university text-3xl"></i>
+                <!-- Bank Transfer Accounts -->
+                <?php foreach ($accounts as $index => $account): ?>
+                    <div
+                        class="bg-gradient-to-br from-secondary to-green-700 rounded-2xl p-8 md:p-12 text-white card-hover">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-white/20 w-16 h-16 rounded-2xl flex items-center justify-center mr-4">
+                                <i class="fas fa-university text-3xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold"><?php echo htmlspecialchars($account['purpose']); ?></h3>
+                                <p class="text-white/90">Bank Transfer</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="text-2xl font-bold">Bank Transfer</h3>
-                            <p class="text-white/90">Direct bank deposit</p>
+                        <div class="bg-white/10 rounded-xl p-6 mb-6 backdrop-blur-sm">
+                            <div class="space-y-3 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-white/80">Bank Name:</span>
+                                    <span class="font-semibold"><?php echo htmlspecialchars($account['bank']); ?></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-white/80">Account Name:</span>
+                                    <span class="font-semibold"><?php echo htmlspecialchars($account['name']); ?></span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-white/80">Account Number:</span>
+                                    <span class="font-bold text-lg"><?php echo htmlspecialchars($account['num']); ?></span>
+                                </div>
+                            </div>
                         </div>
+                        <button
+                            onclick="copyAccountDetails('<?php echo htmlspecialchars($account['bank']); ?>', '<?php echo htmlspecialchars($account['name']); ?>', '<?php echo htmlspecialchars($account['num']); ?>', this)"
+                            class="bg-white/20 hover:bg-white/30 text-white px-8 py-4 rounded-xl font-bold text-lg transition w-full border border-white/30">
+                            <i class="fas fa-copy mr-2"></i>Copy Account Details
+                        </button>
                     </div>
-                    <div class="bg-white/10 rounded-xl p-6 mb-6 backdrop-blur-sm">
-                        <div class="space-y-3 text-sm">
-                            <div class="flex justify-between">
-                                <span class="text-white/80">Bank Name:</span>
-                                <span class="font-semibold"><?php echo htmlspecialchars($bank_name); ?></span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-white/80">Account Name:</span>
-                                <span class="font-semibold"><?php echo htmlspecialchars($account_name); ?></span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-white/80">Account Number:</span>
-                                <span class="font-bold text-lg"><?php echo htmlspecialchars($account_number); ?></span>
-                            </div>
-                        </div>
-                    </div>
-                    <button
-                        class="bg-white/20 hover:bg-white/30 text-white px-8 py-4 rounded-xl font-bold text-lg transition w-full border border-white/30">
-                        <i class="fas fa-copy mr-2"></i>Copy Account Details
-                    </button>
-                </div>
+                <?php endforeach; ?>
             </div>
 
             <!-- Other Methods -->
@@ -363,6 +370,26 @@ if ($result && $result->num_rows > 0) {
 
     <!-- AOS Animation JS -->
     <script>
+        function copyAccountDetails(bankName, accountName, accountNumber, button) {
+            // Copy only account number to clipboard
+            navigator.clipboard.writeText(accountNumber).then(() => {
+                // Store original button content
+                const originalHTML = button.innerHTML;
+
+                // Change button to show success
+                button.innerHTML = '<i class="fas fa-check mr-2"></i>Copied!';
+                button.classList.add('bg-white/40');
+
+                // Reset button after 2 seconds
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.classList.remove('bg-white/40');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy account number. Please try again.');
+            });
+        }
     </script>
 </body>
 

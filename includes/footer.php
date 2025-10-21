@@ -29,7 +29,7 @@
                     <li><a href="contact-us.php" class="hover:text-white">New Here</a></li>
                     <li><a href="events.php" class="hover:text-white">Events</a></li>
                     <li><a href="contact-us.php" class="hover:text-white">Prayer Request</a></li>
-                    <li><a href="sermons.php" class="hover:text-white">Live</a></li>
+                    <li><a href="https://www.youtube.com/@rccgriversprovince1hq820/streams" class="hover:text-white">Live</a></li>
                     <li><a href="sermons.php" class="hover:text-white">Sermon</a></li>
                     <li><a href="contact-us.php" class="hover:text-white">Contact Us</a></li>
                 </ul>
@@ -39,11 +39,11 @@
             <div>
                 <h3 class="text-sm font-semibold text-purple-400 mb-4">FOLLOW US</h3>
                 <div class="flex space-x-4">
-                    <a href="#"
+                    <a href="https://web.facebook.com/rccgrivers1hq"
                         class="w-10 h-10 bg-indigo-900 rounded-full flex items-center justify-center hover:bg-indigo-800">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="#"
+                    <a href="https://www.youtube.com/@rccgriversprovince1hq820/streams"
                         class="w-10 h-10 bg-indigo-900 rounded-full flex items-center justify-center hover:bg-indigo-800">
                         <i class="fab fa-youtube"></i>
                     </a>

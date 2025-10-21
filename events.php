@@ -18,7 +18,8 @@ $featured_event = $featured_result->fetch_assoc();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Events - RCCG Open Heavens Parish</title>
-    <meta name="description" content="Join us for upcoming events and programs at RCCG Open Heavens Parish. Experience community, worship, and fellowship.">
+    <meta name="description"
+        content="Join us for upcoming events and programs at RCCG Open Heavens Parish. Experience community, worship, and fellowship.">
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
@@ -29,7 +30,9 @@ $featured_event = $featured_result->fetch_assoc();
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <!-- Font Awesome -->
     <!-- Custom CSS -->
@@ -89,54 +92,59 @@ $featured_event = $featured_result->fetch_assoc();
     <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <?php if ($featured_event): ?>
-            <div class="bg-gradient-to-br from-[#0d47a1] to-[#001845] rounded-3xl overflow-hidden shadow-2xl">
-                <div class="grid lg:grid-cols-2 gap-8 items-center">
-                    <div class="relative h-96 lg:h-full">
-                        <img src="<?php echo htmlspecialchars($featured_event['image'] ?? 'images/oh/01.jpg'); ?>" alt="Featured Event" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-8 lg:p-12 text-white">
-                        <div class="inline-block bg-yellow-400 text-neutral-900 px-4 py-2 rounded-full text-sm font-bold mb-4">
-                            Featured Event
+                <div class="bg-gradient-to-br from-[#0d47a1] to-[#001845] rounded-3xl overflow-hidden shadow-2xl">
+                    <div class="grid lg:grid-cols-2 gap-8 items-center">
+                        <div class="relative h-96 lg:h-full">
+                            <img src="<?php echo "uploads/events/" . htmlspecialchars($featured_event['image'] ?? 'images/oh/01.jpg'); ?>"
+                                alt="Featured Event" class="w-full h-full object-cover">
                         </div>
-                        <h2 class="text-3xl md:text-4xl font-bold mb-4"><?php echo htmlspecialchars($featured_event['title']); ?></h2>
-                        <p class="text-white/90 text-lg mb-6 leading-relaxed">
-                            <?php echo htmlspecialchars($featured_event['description']); ?>
-                        </p>
-                        <div class="space-y-3 mb-8">
-                            <div class="flex items-center text-lg">
-                                <i class="fas fa-calendar-alt w-8 text-yellow-400"></i>
-                                <span><?php echo date('F j, Y', strtotime($featured_event['start_date'])); ?></span>
+                        <div class="p-8 lg:p-12 text-white">
+                            <div
+                                class="inline-block bg-yellow-400 text-neutral-900 px-4 py-2 rounded-full text-sm font-bold mb-4">
+                                Featured Event
                             </div>
-                            <div class="flex items-center text-lg">
-                                <i class="fas fa-clock w-8 text-yellow-400"></i>
-                                <span><?php echo date('g:i A', strtotime($featured_event['start_date'])) . ' - ' . date('g:i A', strtotime($featured_event['end_date'])); ?></span>
+                            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                                <?php echo htmlspecialchars($featured_event['title']); ?>
+                            </h2>
+                            <p class="text-white/90 text-lg mb-6 leading-relaxed">
+                                <?php echo htmlspecialchars($featured_event['description']); ?>
+                            </p>
+                            <div class="space-y-3 mb-8">
+                                <div class="flex items-center text-lg">
+                                    <i class="fas fa-calendar-alt w-8 text-yellow-400"></i>
+                                    <span><?php echo date('F j, Y', strtotime($featured_event['start_date'])); ?></span>
+                                </div>
+                                <div class="flex items-center text-lg">
+                                    <i class="fas fa-clock w-8 text-yellow-400"></i>
+                                    <span><?php echo date('g:i A', strtotime($featured_event['start_date'])) . ' - ' . date('g:i A', strtotime($featured_event['end_date'])); ?></span>
+                                </div>
+                                <div class="flex items-center text-lg">
+                                    <i class="fas fa-map-marker-alt w-8 text-yellow-400"></i>
+                                    <span><?php echo htmlspecialchars($featured_event['location']); ?></span>
+                                </div>
+                                <?php if ($featured_event['entry_type'] == 'free'): ?>
+                                    <div class="flex items-center text-lg">
+                                        <i class="fas fa-ticket-alt w-8 text-yellow-400"></i>
+                                        <span>Free Entry</span>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="flex items-center text-lg">
+                                        <i class="fas fa-ticket-alt w-8 text-yellow-400"></i>
+                                        <span>Entry Fee: $<?php echo number_format($featured_event['entry_fee'], 2); ?></span>
+                                    </div>
+                                <?php endif; ?>
                             </div>
-                            <div class="flex items-center text-lg">
-                                <i class="fas fa-map-marker-alt w-8 text-yellow-400"></i>
-                                <span><?php echo htmlspecialchars($featured_event['location']); ?></span>
-                            </div>
-                            <?php if ($featured_event['entry_type'] == 'free'): ?>
-                            <div class="flex items-center text-lg">
-                                <i class="fas fa-ticket-alt w-8 text-yellow-400"></i>
-                                <span>Free Entry</span>
-                            </div>
-                            <?php else: ?>
-                            <div class="flex items-center text-lg">
-                                <i class="fas fa-ticket-alt w-8 text-yellow-400"></i>
-                                <span>Entry Fee: $<?php echo number_format($featured_event['entry_fee'], 2); ?></span>
-                            </div>
-                            <?php endif; ?>
+                            <a href="contact-us.php"
+                                class="bg-yellow-400 hover:bg-yellow-500 text-neutral-900 px-8 py-4 rounded-xl font-bold text-lg transition shadow-lg">
+                                Register Now
+                            </a>
                         </div>
-                        <button class="bg-yellow-400 hover:bg-yellow-500 text-neutral-900 px-8 py-4 rounded-xl font-bold text-lg transition shadow-lg">
-                            Register Now
-                        </button>
                     </div>
                 </div>
-            </div>
             <?php else: ?>
-            <div class="text-center py-12">
-                <p class="text-neutral-600 text-lg">No featured events at this time. Check back soon!</p>
-            </div>
+                <div class="text-center py-12">
+                    <p class="text-neutral-600 text-lg">No featured events at this time. Check back soon!</p>
+                </div>
             <?php endif; ?>
         </div>
     </section>
@@ -158,49 +166,52 @@ $featured_event = $featured_result->fetch_assoc();
                     $image_index = 0;
                     while ($event = $events_result->fetch_assoc()):
                         $event_date = new DateTime($event['start_date']);
-                ?>
-                <!-- Event Card -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
-                    <div class="relative">
-                        <img src="<?php echo htmlspecialchars($event['image'] ?? $default_images[$image_index++ % count($default_images)]); ?>" alt="Event" class="w-full h-56 object-cover">
-                        <div class="absolute top-4 right-4 bg-white text-[#0d47a1] px-4 py-2 rounded-xl shadow-lg text-center">
-                            <div class="text-3xl font-bold"><?php echo $event_date->format('d'); ?></div>
-                            <div class="text-sm"><?php echo strtoupper($event_date->format('M')); ?></div>
+                        ?>
+                        <!-- Event Card -->
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
+                            <div class="relative">
+                                <img src="<?php echo "uploads/events/" . htmlspecialchars($event['image'] ?? $default_images[$image_index++ % count($default_images)]); ?>"
+                                    alt="Event" class="w-full h-56 object-cover">
+                                <div
+                                    class="absolute top-4 right-4 bg-white text-[#0d47a1] px-4 py-2 rounded-xl shadow-lg text-center">
+                                    <div class="text-3xl font-bold"><?php echo $event_date->format('d'); ?></div>
+                                    <div class="text-sm"><?php echo strtoupper($event_date->format('M')); ?></div>
+                                </div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-neutral-900 mb-3">
+                                    <?php echo htmlspecialchars($event['title']); ?>
+                                </h3>
+                                <p class="text-neutral-600 mb-4 text-sm line-clamp-2">
+                                    <?php echo htmlspecialchars($event['description']); ?>
+                                </p>
+                                <div class="space-y-2 mb-6">
+                                    <div class="flex items-center text-neutral-600 text-sm">
+                                        <i class="fas fa-clock text-[#0d47a1] mr-3 w-5"></i>
+                                        <span><?php echo date('g:i A', strtotime($event['start_date'])) . ' - ' . date('g:i A', strtotime($event['end_date'])); ?></span>
+                                    </div>
+                                    <div class="flex items-center text-neutral-600 text-sm">
+                                        <i class="fas fa-map-marker-alt text-[#0d47a1] mr-3 w-5"></i>
+                                        <span><?php echo htmlspecialchars($event['location']); ?></span>
+                                    </div>
+                                    <div class="flex items-center text-neutral-600 text-sm">
+                                        <i class="fas fa-ticket-alt text-[#0d47a1] mr-3 w-5"></i>
+                                        <span><?php echo $event['entry_type'] == 'free' ? 'Free Entry' : '$' . number_format($event['entry_fee'], 2); ?></span>
+                                    </div>
+                                </div>
+                                <a href="event-detail.php?id=<?php echo $event['id']; ?>"
+                                    class="block w-full text-center bg-primary hover:bg-[#0d47a1]/90 text-white py-3 rounded-lg font-semibold transition">
+                                    View Details
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-neutral-900 mb-3">
-                            <?php echo htmlspecialchars($event['title']); ?>
-                        </h3>
-                        <p class="text-neutral-600 mb-4 text-sm line-clamp-2">
-                            <?php echo htmlspecialchars($event['description']); ?>
-                        </p>
-                        <div class="space-y-2 mb-6">
-                            <div class="flex items-center text-neutral-600 text-sm">
-                                <i class="fas fa-clock text-[#0d47a1] mr-3 w-5"></i>
-                                <span><?php echo date('g:i A', strtotime($event['start_date'])) . ' - ' . date('g:i A', strtotime($event['end_date'])); ?></span>
-                            </div>
-                            <div class="flex items-center text-neutral-600 text-sm">
-                                <i class="fas fa-map-marker-alt text-[#0d47a1] mr-3 w-5"></i>
-                                <span><?php echo htmlspecialchars($event['location']); ?></span>
-                            </div>
-                            <div class="flex items-center text-neutral-600 text-sm">
-                                <i class="fas fa-ticket-alt text-[#0d47a1] mr-3 w-5"></i>
-                                <span><?php echo $event['entry_type'] == 'free' ? 'Free Entry' : '$' . number_format($event['entry_fee'], 2); ?></span>
-                            </div>
-                        </div>
-                        <a href="event-detail.php?id=<?php echo $event['id']; ?>" class="block w-full text-center bg-primary hover:bg-[#0d47a1]/90 text-white py-3 rounded-lg font-semibold transition">
-                            View Details
-                        </a>
-                    </div>
-                </div>
-                <?php
+                        <?php
                     endwhile;
                 else:
-                ?>
-                <div class="col-span-full text-center py-12">
-                    <p class="text-neutral-600 text-lg">No upcoming events at this time. Check back soon!</p>
-                </div>
+                    ?>
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-neutral-600 text-lg">No upcoming events at this time. Check back soon!</p>
+                    </div>
                 <?php endif; ?>
             </div>
         </div>
@@ -214,8 +225,10 @@ $featured_event = $featured_result->fetch_assoc();
                 Subscribe to our newsletter and never miss an event or update from RCCG Open Heavens Parish
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
-                <input type="email" placeholder="Enter your email" class="flex-1 px-6 py-3 rounded-lg text-neutral-900 focus:outline-none focus:ring-2 focus:ring-yellow-400">
-                <button class="bg-yellow-400 hover:bg-yellow-500 text-neutral-900 px-8 py-3 rounded-lg font-bold transition">
+                <input type="email" placeholder="Enter your email"
+                    class="flex-1 px-6 py-3 rounded-lg text-neutral-900 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                <button
+                    class="bg-yellow-400 hover:bg-yellow-500 text-neutral-900 px-8 py-3 rounded-lg font-bold transition">
                     Subscribe
                 </button>
             </div>

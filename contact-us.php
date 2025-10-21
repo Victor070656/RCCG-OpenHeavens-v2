@@ -111,7 +111,7 @@
                     <p class="text-neutral-600 mb-4">Mon - Fri: 9AM - 5PM</p>
                     <a href="tel:+2348012345678"
                         class="text-[#0d47a1] font-semibold hover:text-[#0d47a1]/80 transition">
-                        +234 801 234 5678
+                        +234 802 255 2546
                     </a>
                 </div>
 
@@ -240,14 +240,14 @@
                                     <p class="font-semibold text-neutral-900">Tuesday Bible Study</p>
                                     <p class="text-sm text-neutral-600">Bible Study & Prayer</p>
                                 </div>
-                                <p class="text-[#0d47a1] font-bold">6:00 PM</p>
+                                <p class="text-[#0d47a1] font-bold">5:30 PM</p>
                             </div>
                             <div class="flex justify-between items-center">
                                 <div>
                                     <p class="font-semibold text-neutral-900">Thursday Faith Clinic</p>
                                     <p class="text-sm text-neutral-600">Bible Study & Prayer</p>
                                 </div>
-                                <p class="text-[#0d47a1] font-bold">6:00 PM</p>
+                                <p class="text-[#0d47a1] font-bold">5:30 PM</p>
                             </div>
                         </div>
                     </div>
@@ -271,19 +271,11 @@
                         <p class="text-white/90 mb-6">Follow us on social media to stay updated with our latest news and
                             events</p>
                         <div class="flex gap-4">
-                            <a href="#"
+                            <a href="https://web.facebook.com/rccgrivers1hq"
                                 class="w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition">
                                 <i class="fab fa-facebook-f text-lg"></i>
                             </a>
-                            <a href="#"
-                                class="w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition">
-                                <i class="fab fa-twitter text-lg"></i>
-                            </a>
-                            <a href="#"
-                                class="w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition">
-                                <i class="fab fa-instagram text-lg"></i>
-                            </a>
-                            <a href="#"
+                            <a href="https://www.youtube.com/@rccgriversprovince1hq820/streams"
                                 class="w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition">
                                 <i class="fab fa-youtube text-lg"></i>
                             </a>
