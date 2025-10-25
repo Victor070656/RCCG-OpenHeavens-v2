@@ -116,7 +116,7 @@ $sermons_result = $conn->query($query);
                         <!-- Sermon Card -->
                         <div class="bg-white rounded-2xl overflow-hidden shadow-sm card-hover">
                             <div class="relative">
-                                <img src="<?php echo htmlspecialchars($sermon['thumbnail'] ?? $default_images[$image_index++ % count($default_images)]); ?>"
+                                <img src="<?php echo htmlspecialchars("uploads/sermons/" . $sermon['thumbnail'] ?? $default_images[$image_index++ % count($default_images)]); ?>"
                                     alt="Sermon" class="w-full h-56 object-cover">
                                 <?php if ($sermon['category']): ?>
                                     <div class="absolute top-4 left-4">
@@ -160,7 +160,7 @@ $sermons_result = $conn->query($query);
             </div>
 
             <!-- Pagination -->
-            <div class="flex justify-center mt-12">
+            <!-- <div class="flex justify-center mt-12">
                 <nav class="flex items-center space-x-2">
                     <button
                         class="px-4 py-2 bg-neutral-200 text-neutral-700 rounded-lg hover:bg-neutral-300 transition">
@@ -176,7 +176,7 @@ $sermons_result = $conn->query($query);
                         <i class="fas fa-chevron-right"></i>
                     </button>
                 </nav>
-            </div>
+            </div> -->
         </div>
     </section>
 

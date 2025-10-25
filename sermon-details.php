@@ -133,7 +133,7 @@ $related_result = $related_stmt->get_result();
             <!-- Featured Image -->
             <?php if ($sermon['thumbnail']): ?>
             <div class="mb-8 rounded-2xl overflow-hidden shadow-lg">
-                <img src="<?php echo htmlspecialchars($sermon['thumbnail']); ?>" alt="<?php echo htmlspecialchars($sermon['title']); ?>" class="w-full h-96 object-cover">
+                <img src="<?php echo htmlspecialchars("uploads/sermons".$sermon['thumbnail']); ?>" alt="<?php echo htmlspecialchars($sermon['title']); ?>" class="w-full h-96 object-cover">
             </div>
             <?php endif; ?>
 
